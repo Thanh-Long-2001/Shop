@@ -40,7 +40,7 @@ export class OrderController {
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.USER)
-  @UseInterceptors(TransformInterceptor)
+  // @UseInterceptors(TransformInterceptor)
   @Get()
   async getOrder(@Request() req: any): Promise<{ message: string; data: any }> {
     let userId = req.user.id;

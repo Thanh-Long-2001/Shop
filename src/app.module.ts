@@ -11,6 +11,7 @@ import { BranchshopModule } from './modules/branchshop/branchshop.module';
 import { InfoshopModule } from './modules/infoshop/infoshop.module';
 import { QuantityProductModule } from './modules/quantityproduct copy/quantityProduct.module';
 import { OrderModule } from './modules/order/order.module';
+import { LoggerModule } from './Log/logger.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -22,7 +23,7 @@ import { OrderModule } from './modules/order/order.module';
       database: 'shopdb',
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: false,
-      logging: true,
+      // logging: true,
     }),
 
     AuthModule,
@@ -34,6 +35,7 @@ import { OrderModule } from './modules/order/order.module';
     QuantityProductModule,
     OrderModule,
     JwtModule,
+    LoggerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

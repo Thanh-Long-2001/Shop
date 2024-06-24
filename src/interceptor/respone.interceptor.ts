@@ -27,14 +27,19 @@ export class TransformInterceptor<T>
   ): Observable<Response<TransformedData<T>>> {
     return next.handle().pipe(
       map((data) => {
-        if (data) {
-          return {
-            statusCode: context.switchToHttp().getResponse().statusCode,
-            message: data.message,
-            data: data.data,
-          };
-        }
-        return data;
+        // if (data) {
+        //   return {
+        //     statusCode: context.switchToHttp().getResponse().statusCode,
+        //     message: data.message,
+        //     data: data.data,
+        //   };
+        // }
+        // return data;
+        return {
+          statusCode: context.switchToHttp().getResponse().statusCode,
+          message: data.message,
+          data: data.data,
+        };
       }),
     );
   }
