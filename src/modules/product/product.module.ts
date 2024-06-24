@@ -5,7 +5,7 @@ import { ProductController } from './product.controller';
 import { ProductService } from './product.service';
 import { Product } from 'src/entities/product.entity';
 import { Category } from 'src/entities/category.entity';
-import { Logger } from 'src/Log/logger.service';
+import { Logger } from 'src/log/logger.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Product, Category])],

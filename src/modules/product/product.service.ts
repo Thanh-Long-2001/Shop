@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Category } from 'src/entities/category.entity';
-import { Logger } from 'src/Log/logger.service';
+import { Logger } from 'src/log/logger.service';
 import {
   paginate,
   Pagination,

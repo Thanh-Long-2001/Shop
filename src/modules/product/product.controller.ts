@@ -21,7 +21,7 @@ import { ProductService } from './product.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from 'src/entities/category.entity';
 import { Repository } from 'typeorm';
-import { Logger } from 'src/Log/logger.service';
+import { Logger } from 'src/log/logger.service';
 import { Pagination } from 'nestjs-typeorm-paginate';
 
 @ApiBearerAuth()

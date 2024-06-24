@@ -11,7 +11,7 @@ import { BranchshopModule } from './modules/branchshop/branchshop.module';
 import { InfoshopModule } from './modules/infoshop/infoshop.module';
 import { QuantityProductModule } from './modules/quantityproduct copy/quantityProduct.module';
 import { OrderModule } from './modules/order/order.module';
-import { LoggerModule } from './Log/logger.module';
+import { LoggerModule } from './log/logger.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({

@@ -6,7 +6,7 @@ import * as config from './config/config.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { SwaggerDocumentOptions } from './swagger/swagger-config.interface';
 import { TransformInterceptor } from './interceptor/respone.interceptor';
-import { Logger } from './Log/logger.service';
+import { Logger } from './log/logger.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
