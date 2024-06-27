@@ -12,18 +12,20 @@ import { InfoshopModule } from './modules/infoshop/infoshop.module';
 import { QuantityProductModule } from './modules/quantityproduct copy/quantityProduct.module';
 import { OrderModule } from './modules/order/order.module';
 import { LoggerModule } from './log/logger.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { getTypeOrmModuleOptions } from './config/database.config';
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'admin',
-      database: 'shopdb',
-      entities: ['dist/**/*.entity{.ts,.js}'],
-      synchronize: false,
-      // logging: true,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: [`${process.env.NODE_ENV.trim()}.env`],
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        ...getTypeOrmModuleOptions(),
+      }),
     }),
 
     AuthModule,

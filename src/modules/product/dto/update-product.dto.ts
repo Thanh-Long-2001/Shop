@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Category } from 'src/entities/category.entity';
+import { Category } from 'src/modules/category/entities/category.entity';
 
 export class UpdateProductDto {
   @ApiProperty({ example: 'Quần', required: false })

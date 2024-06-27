@@ -1,3 +1,5 @@
+import { Product } from 'src/modules/product/entities/product.entity';
+import { User } from 'src/modules/user/entities/user.entity';
 import {
   Column,
   Entity,
@@ -9,8 +11,6 @@ import {
   PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from './user.entity';
-import { Product } from './product.entity';
 import { OrderProduct } from './order-product.entity';
 
 export enum CapchaType {

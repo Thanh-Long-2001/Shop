@@ -12,17 +12,19 @@ import {
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/auth/guards/role.guard';
 import { Roles } from 'src/auth/decorators/role.decorator';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { UserRole } from 'src/entities/user.entity';
-import { Product } from 'src/entities/product.entity';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 import { ProductService } from './product.service';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Category } from 'src/entities/category.entity';
 import { Repository } from 'typeorm';
 import { Logger } from 'src/log/logger.service';
 import { Pagination } from 'nestjs-typeorm-paginate';
+import { Category } from '../category/entities/category.entity';
+import { UserRole } from '../user/entities/user.entity';
+import { Product } from './entities/product.entity';
+import { SortDto } from 'src/enums/sort.enum';
+import { FieldSort } from 'src/enums/field-sort.enum';
 
 @ApiBearerAuth()
 @ApiTags('Product')
@@ -65,15 +67,22 @@ export class ProductController {
     return this.productService.updateProduct(product, id);
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(UserRole.USER)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(UserRole.USER)
   @Get('category/:id')
-  async findByCategory(
+  @ApiQuery({ name: 'page', type: Number, required: false })
+  @ApiQuery({ name: 'limit', type: Number, required: false })
+  @ApiQuery({ name: 'field', enum: FieldSort, required: false })
+  @ApiQuery({ name: 'priceMin', type: Number, required: false })
+  @ApiQuery({ name: 'priceMax', type: Number, required: false })
+  async findByCategoryAndSortBy(
     @Param('id') id: string,
-    @Query('page') page: number = 1,
+    @Query('page') page: number,
     @Query('limit') limit: number,
+    @Query('field') field: FieldSort,
+    @Query('priceMin') priceMin: number,
+    @Query('priceMax') priceMax: number,
   ): Promise<{ message: string; data: Pagination<Product> }> {
-    limit = limit > 2 ? 2 : limit;
     const category = await this.categoryRepository.findOne({
       where: { id: parseInt(id) },
     });
@@ -84,7 +93,7 @@ export class ProductController {
         'ProductService',
       );
     }
-
+    const sort: SortDto = { field, priceMin, priceMax };
     let result = {
       message: 'Get Product success!',
       data: await this.productService.findByCategory(
@@ -93,6 +102,7 @@ export class ProductController {
           limit,
         },
         category,
+        sort,
       ),
     };
     return result;

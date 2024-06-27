@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
-import { BranchShop } from 'src/entities/branchshop.entity';
-import { Category } from 'src/entities/category.entity';
+import { Category } from 'src/modules/category/entities/category.entity';
 
 export class CreateProductDto {
   @ApiProperty({ example: 'Quần rách', required: true })

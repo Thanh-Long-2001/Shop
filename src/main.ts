@@ -1,8 +1,16 @@
+import { config } from 'dotenv'; // Import dotenv at the top
+config(); // Load default .env file
+console.log('Default environment variables loaded.');
+
+if (process.env.NODE_ENV) {
+  const envFilePath = `.env.${process.env.NODE_ENV}`;
+  console.log(`Loading environment variables from ${envFilePath}`);
+  config({ path: envFilePath });
+}
+
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import * as config from './config/config.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { SwaggerDocumentOptions } from './swagger/swagger-config.interface';
 import { TransformInterceptor } from './interceptor/respone.interceptor';
@@ -19,7 +27,7 @@ async function bootstrap() {
     }),
   );
 
-  app.useGlobalInterceptors(new TransformInterceptor());
+  // app.useGlobalInterceptors(new TransformInterceptor());
   const config = new DocumentBuilder()
     .setTitle('Shop test API')
     .setDescription('The shop API description')

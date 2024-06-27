@@ -1,16 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Product } from '../../entities/product.entity';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Category } from 'src/entities/category.entity';
 import { Logger } from 'src/log/logger.service';
 import {
   paginate,
   Pagination,
   IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
+import { Category } from '../category/entities/category.entity';
+import { Product } from './entities/product.entity';
+import { SortDto } from 'src/enums/sort.enum';
 @Injectable()
 export class ProductService {
   constructor(
@@ -49,6 +50,7 @@ export class ProductService {
   async findByCategory(
     options: IPaginationOptions,
     category: Category,
+    sort: SortDto,
   ): Promise<Pagination<Product>> {
     this.logger.log(
       `Fetching products for category ID: ${category.id}`,
@@ -60,6 +62,29 @@ export class ProductService {
       .leftJoinAndSelect('product.category', 'category')
       .where('category.id IN (:...categoryIds)', { categoryIds });
 
+    console.log(sort);
+
+    if (sort.priceMin !== undefined && sort.priceMax !== undefined) {
+      queryBuilder.andWhere('product.price BETWEEN :priceMin AND :priceMax', {
+        priceMin: sort.priceMin,
+        priceMax: sort.priceMax,
+      });
+    } else if (sort.priceMin !== undefined) {
+      queryBuilder.andWhere('product.price >= :priceMin', {
+        priceMin: sort.priceMin,
+      });
+    } else if (sort.priceMax !== undefined) {
+      queryBuilder.andWhere('product.price <= :priceMax', {
+        priceMax: sort.priceMax,
+      });
+    }
+
+    if (sort.field) {
+      queryBuilder.orderBy(
+        'product.price',
+        sort.field === 'increase' ? 'ASC' : 'DESC',
+      );
+    }
     this.logger.log(
       `Query built for category ID: ${category.id}`,
       'ProductService',

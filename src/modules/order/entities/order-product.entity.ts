@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { Product } from './product.entity';
 import { Order } from './order.entity';
+import { Product } from 'src/modules/product/entities/product.entity';
 
 export const ORDER_PRODUCT_TABLENAME = `order-product`;
 

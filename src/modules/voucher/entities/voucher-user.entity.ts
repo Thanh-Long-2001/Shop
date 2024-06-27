@@ -9,8 +9,8 @@ import {
   PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from './user.entity';
 import { Voucher } from './voucher.entity';
+import { User } from 'src/modules/user/entities/user.entity';
 
 @Entity('voucher-user')
 export class VoucherUser {

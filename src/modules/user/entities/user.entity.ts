@@ -1,3 +1,5 @@
+import { Order } from 'src/modules/order/entities/order.entity';
+import { Voucher } from 'src/modules/voucher/entities/voucher.entity';
 import {
   Entity,
   ObjectIdColumn,
@@ -8,8 +10,6 @@ import {
   OneToMany,
   ManyToMany,
 } from 'typeorm';
-import { Voucher } from './voucher.entity';
-import { Order } from './order.entity';
 
 export enum UserRole {
   ADMIN = 'admin',

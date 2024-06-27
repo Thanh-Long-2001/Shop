@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Product } from './product.entity';
-import { BranchShop } from './branchshop.entity';
+import { BranchShop } from 'src/modules/branchshop/entities/branchshop.entity';
 
 @Entity('quantity-product')
 export class QuantityProduct {

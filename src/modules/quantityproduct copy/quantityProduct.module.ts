@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { QuantityProductController } from './quantityProduct.controller';
 import { QuantityProductService } from './quantityProduct.service';
-import { QuantityProduct } from 'src/entities/quantity-product.entity';
+import { QuantityProduct } from '../product/entities/quantity-product.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([QuantityProduct])],

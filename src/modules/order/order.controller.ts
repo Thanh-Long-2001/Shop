@@ -13,13 +13,10 @@ import { OrderService } from './order.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/auth/guards/role.guard';
 import { Roles } from 'src/auth/decorators/role.decorator';
-import { UserRole } from 'src/entities/user.entity';
-import { Order } from 'src/entities/order.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { OrderProduct } from 'src/entities/order-product.entity';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { TransformInterceptor } from 'src/interceptor/respone.interceptor';
-import { ResponeData } from './dto/respone-data';
+import { UserRole } from '../user/entities/user.entity';
+import { OrderProduct } from './entities/order-product.entity';
 
 @ApiBearerAuth()
 @ApiTags('Order')

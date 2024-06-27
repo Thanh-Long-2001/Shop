@@ -1,18 +1,26 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
 import { UserService } from './user.service';
-import { User, UserRole } from '../../entities/user.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/auth/guards/role.guard';
 import { Roles } from 'src/auth/decorators/role.decorator';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { UserRole, User } from './entities/user.entity';
 
 @ApiBearerAuth()
 @ApiTags('User')
 @Controller('api/user')
 export class UserController {
   constructor(private userService: UserService) {}
-
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
@@ -30,6 +38,6 @@ export class UserController {
 
   @Put(':id')
   update(@Param('id') id: string, @Body() user: UpdateUserDto): Promise<void> {
-     return this.userService.updateUser(user, id);
+    return this.userService.updateUser(user, id);
   }
 }
